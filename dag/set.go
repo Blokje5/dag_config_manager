@@ -5,8 +5,12 @@ package dag
 type Set interface {
 	Add(...interface{})
 	Remove(...interface{})
-	Contains(...interface{})
+	Contains(...interface{}) bool
+	Len() int
+	List() []interface{}
 }
+
+var _ Set = (*hashSet)(nil)
 
 type hashSet struct {
 	items map[interface{}]bool
@@ -43,6 +47,16 @@ func (s *hashSet) Contains(values ...interface{}) bool {
 	}
 
 	return true
+}
+
+// List returns the set as a slice
+func (s *hashSet) List() []interface{} {
+	l := make([]interface{}, s.Len())
+	for k := range s.items {
+		l = append(l, k)
+	}
+
+	return l
 }
 
 // Len returns the lenght of the Set 

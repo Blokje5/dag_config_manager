@@ -4,12 +4,15 @@ package dag
 type Graph struct {
 	edges Set
 	vertices Set
-	adjacencyList map[int][]int
+	adjacencyList map[T][]T
 }
 
 type Edge struct {}
 
-type Vertice struct {}
+type Vertice interface {
+	Neighbours() []Vertice
+	Hashable
+}
 
 // NewGraph creates a new Graph
 func NewGraph() *Graph {
@@ -50,6 +53,26 @@ func (g *Graph) Edges() []Edge {
 	}
 
 	return e
+}
+// DFS performs Depth First Search on the adjecency list
+func DFS(adjacencyList []Vertice) {
+	visited := make(map[int]bool, len(adjacencyList))
+	for _, v := range adjacencyList {
+		dfs(v, visited)
+	}
+}
+
+func dfs(v Vertice, visited map[int]bool) {
+	s := NewStack(v)
+	for s.Size() > 0 {
+		next, _ := s.Pop()
+		u := next.(Vertice)
+		if !visited[u.Hashcode()] {
+			visited[u.Hashcode()] = true
+		}
+
+		s.Push(u.Neighbours)
+	}
 }
 
 // DFS

@@ -4,6 +4,54 @@ type Vertex interface {
 	Hashable
 }
 
+type Graph struct {
+	vertices Set
+	adjacencyList map[int][]Vertex
+}
+
+// NewGraph returns an initialized Graph 
+func NewGraph() *Graph {
+	return &Graph {
+		vertices: NewSet(),
+	}
+}
+
+// Vertices returns a list of vertices
+func (g *Graph) Vertices() []Vertex {
+	l := g.vertices.List()
+	v := make([]Vertex, g.vertices.Len())
+	for _, i := range l {
+		v = append(v, i.(Vertex))
+	}
+
+	return v
+}
+
+func (g *Graph) AdjacencyList() map[int][]Vertex {
+	return g.adjacencyList
+}
+
+// Neighbours returns all neighbouring vertices of vertex "v".
+// If "v" has no neighbours, a nil slice will be returned.
+func (g *Graph) Neighbours(v Vertex) []Vertex {
+	return g.adjacencyList[v.Hashcode()]
+}
+
+// Cycles returns the list of components in graph "g" that
+// contain a cycle. Each component is represented as a Vertex slice. 
+func (g *Graph) Cycles() [][]Vertex {
+	sccs := StronglyConnectedComponents(g)
+	var cycles [][]Vertex
+	for _, scc := range sccs {
+		// Cycle when there is a scc larger then size 1
+		if len(scc) > 1 {
+			cycles = append(cycles, scc)
+		}
+	}
+
+	return cycles
+}
+
 // Traversal provides a basic interface for graph traversal
 type Traversal interface {
 	// Visited should return true if Vertex "v" has already been visited in this
@@ -33,7 +81,7 @@ func DFS(t Traversal, v Vertex, f StopFunc) {
 func dfs(t Traversal, v Vertex, f StopFunc) {
 	a := t.AdjacencyList()
 	s := NewStack(v)
-	for s.Size() > 0 {
+	for s.Len() > 0 {
 		next, _ := s.Pop()
 		u := next.(Vertex)
 		if t.Visited(u) {

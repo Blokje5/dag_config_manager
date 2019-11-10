@@ -8,9 +8,9 @@ import (
 func TestStack_Push(t *testing.T) {
 	tests := []struct {
 		name   string
-		stack *Stack
+		stack Stack
 		elements []T
-		expected *Stack
+		expected Stack
 	}{
 		{
 			"Adding an element to an empty stack",
@@ -36,7 +36,7 @@ func TestStack_Push(t *testing.T) {
 			s := tc.stack
 			s.Push(tc.elements...)
 			if !reflect.DeepEqual(s,tc.expected) {
-				t.Errorf("Stack.Push() got = %v, expected %v", s.items, tc.expected.items)
+				t.Errorf("Stack.Push() got = %v, expected %v", s, tc.expected)
 			}
 		})
 	}
@@ -49,8 +49,8 @@ func TestStack_Pop(t *testing.T) {
 	} 
 	tests := []struct {
 		name   string
-		stack *Stack
-		expectedStack *Stack
+		stack Stack
+		expectedStack Stack
 		expectedResult result
 	}{
 		{
@@ -71,7 +71,7 @@ func TestStack_Pop(t *testing.T) {
 			s := tc.stack
 			item, found := s.Pop()
 			// TODO (leijsackers): Currently I have no better way to deal with nil vs empty slice
-			if s.top != tc.expectedStack.top || s.Size() != tc.expectedStack.Size() {
+			if s.Len() != tc.expectedStack.Len() {
 				t.Errorf("Stack.Pop() got stack = %v, expected stack %v", s, tc.expectedStack)
 			}
 
@@ -89,8 +89,8 @@ func TestStack_Peek(t *testing.T) {
 	} 
 	tests := []struct {
 		name   string
-		stack *Stack
-		expectedStack *Stack
+		stack Stack
+		expectedStack Stack
 		expectedResult result
 	}{
 		{
@@ -124,7 +124,7 @@ func TestStack_Peek(t *testing.T) {
 func TestStack_Size(t *testing.T) {
 	tests := []struct {
 		name   string
-		stack *Stack
+		stack Stack
 		expected   int
 	}{
 		{
@@ -141,8 +141,72 @@ func TestStack_Size(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			s := tc.stack
-			if got := s.Size(); got != tc.expected {
-				t.Errorf("Stack.Size() = %v, want %v", got, tc.expected)
+			if l := s.Len(); l != tc.expected {
+				t.Errorf("Stack.Len() = %v, want %v", l, tc.expected)
+			}
+		})
+	}
+}
+
+
+func TestStack_Contains(t *testing.T) {
+	tests := []struct {
+		name   string
+		stack Stack
+		element T
+		expected   bool
+	}{
+		{
+			"Empty stack should not contain element",
+			NewStack(),
+			1,
+			false,
+		},
+		{
+			"Initialized stack should return true if element is found",
+			NewStack(1, 2, 3),
+			1,
+			true,
+		},
+		{
+			"Initialized stack should return true if element is not found",
+			NewStack(1, 2, 3),
+			4,
+			false,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			s := tc.stack
+			if found := s.Contains(tc.element); found != tc.expected {
+				t.Errorf("Stack.Contains() = %v, want %v", found, tc.expected)
+			}
+		})
+	}
+}
+
+func TestStack_String(t *testing.T) {
+	tests := []struct {
+		name   string
+		stack Stack
+		expected   string
+	}{
+		{
+			"Empty stack should return empty string",
+			NewStack(),
+			"",
+		},
+		{
+			"Initialized stack should return comma seperated list of elements",
+			NewStack(1, 2, 3),
+			"1,2,3",
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			s := tc.stack
+			if str := s.String(); str != tc.expected {
+				t.Errorf("Stack.String() = %v, want %v", str, tc.expected)
 			}
 		})
 	}

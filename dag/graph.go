@@ -13,7 +13,25 @@ type Graph struct {
 func NewGraph() *Graph {
 	return &Graph {
 		vertices: NewSet(),
+		adjacencyList: make(map[int][]Vertex),
 	}
+}
+
+// AddEdge adds an edge from vertex "v1" to vertex "v2".
+// It will add the vertices to the graph if both where not present.
+// The graph is returned to make it easy to chain methods
+func (g *Graph) AddEdge(v1, v2 Vertex) *Graph {
+	g.vertices.Add(v1, v2)
+
+	neighbours := g.Neighbours(v1)
+	for _, v := range neighbours {
+		if v2.Hashcode() == v.Hashcode() {
+			return g
+		}
+	}
+
+	g.adjacencyList[v1.Hashcode()] = append(g.adjacencyList[v1.Hashcode()], v2)
+	return g
 }
 
 // Vertices returns a list of vertices
@@ -27,6 +45,7 @@ func (g *Graph) Vertices() []Vertex {
 	return v
 }
 
+// AdjacencyList returns the adjacency list representation of the graph
 func (g *Graph) AdjacencyList() map[int][]Vertex {
 	return g.adjacencyList
 }

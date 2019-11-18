@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+type testVertex struct {
+	i int
+}
+
+func (t *testVertex) Hashcode() int {
+	return t.i
+}
+
 func TestGraph_Cycles(t *testing.T) {
 	tests := []struct {
 		name   string
@@ -14,6 +22,10 @@ func TestGraph_Cycles(t *testing.T) {
 		{
 			name: "Empty graph should not contain cycles",
 			g: NewGraph(),
+		},
+		{
+			name: "Graph with linear edges should not contain cycles",
+			g: NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}),
 		},
 	}
 	for _, tc := range tests {

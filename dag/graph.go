@@ -58,6 +58,7 @@ func (g *Graph) Neighbours(v Vertex) []Vertex {
 
 // Cycles returns the list of components in graph "g" that
 // contain a cycle. Each component is represented as a Vertex slice. 
+// TODO implement with Set instead of slice.
 func (g *Graph) Cycles() [][]Vertex {
 	sccs := StronglyConnectedComponents(g)
 	var cycles [][]Vertex

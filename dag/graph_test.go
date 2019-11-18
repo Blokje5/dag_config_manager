@@ -27,6 +27,11 @@ func TestGraph_Cycles(t *testing.T) {
 			name: "Graph with linear edges should not contain cycles",
 			g: NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}),
 		},
+		{
+			name: "Graph with cycle should be detected",
+			g: NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}).AddEdge(&testVertex{3}, &testVertex{1}),
+			want: [][]Vertex{[]Vertex{&testVertex{3},&testVertex{2},&testVertex{1}}},
+		},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

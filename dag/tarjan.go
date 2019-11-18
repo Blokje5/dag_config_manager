@@ -36,7 +36,6 @@ func stronglyConnectedComponents(t *tarjanTraversal, v Vertex) int {
 	for _, u := range t.graph.Neighbours(v) {
 		if !t.visited(u) {
 			// Vertex "u" has not yet been visited, recursivly search "u"
-			t.increment(u)
 			minIdx = min(minIdx, stronglyConnectedComponents(t, u))
 		} else if t.stack.Contains(u) {
 			// Vertex u is is in the Stack, hence part of the current SCC

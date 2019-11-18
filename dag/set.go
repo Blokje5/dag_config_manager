@@ -51,7 +51,7 @@ func (s *hashSet) Contains(values ...Hashable) bool {
 
 // List returns the set as a slice
 func (s *hashSet) List() []Hashable {
-	l := make([]Hashable, s.Len())
+	l := make([]Hashable, 0, s.Len())
 	for _, k := range s.items {
 		l = append(l, k)
 	}

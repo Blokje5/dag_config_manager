@@ -5,14 +5,14 @@ type Vertex interface {
 }
 
 type Graph struct {
-	vertices Set
+	vertices      Set
 	adjacencyList map[int][]Vertex
 }
 
-// NewGraph returns an initialized Graph 
+// NewGraph returns an initialized Graph
 func NewGraph() *Graph {
-	return &Graph {
-		vertices: NewSet(),
+	return &Graph{
+		vertices:      NewSet(),
 		adjacencyList: make(map[int][]Vertex),
 	}
 }
@@ -57,7 +57,7 @@ func (g *Graph) Neighbours(v Vertex) []Vertex {
 }
 
 // Cycles returns the list of components in graph "g" that
-// contain a cycle. Each component is represented as a Vertex slice. 
+// contain a cycle. Each component is represented as a Vertex slice.
 // TODO implement with Set instead of slice.
 func (g *Graph) Cycles() [][]Vertex {
 	sccs := StronglyConnectedComponents(g)
@@ -79,14 +79,14 @@ func (g *Graph) TopologicalSorting() []Vertex {
 	vs := g.Vertices()
 	vl := len(vs)
 
-	t := &topologicalSortingTraversal {
+	t := &topologicalSortingTraversal{
 		visitedMap: make(map[int]struct{}, vl),
-		sorted: make([]Vertex, vl),
-		graph: g,
-		time: -1,
+		sorted:     make([]Vertex, vl),
+		graph:      g,
+		time:       -1,
 	}
 
-	for _, v := range  vs {
+	for _, v := range vs {
 		if !t.visited(v) {
 			topologicalSorting(t, v)
 		}
@@ -101,10 +101,10 @@ func (g *Graph) TopologicalSorting() []Vertex {
 }
 
 type topologicalSortingTraversal struct {
-	sorted []Vertex
+	sorted     []Vertex
 	visitedMap map[int]struct{}
-	graph *Graph
-	time int
+	graph      *Graph
+	time       int
 }
 
 func (t *topologicalSortingTraversal) visited(v Vertex) bool {
@@ -124,7 +124,7 @@ func topologicalSorting(t *topologicalSortingTraversal, v Vertex) {
 			topologicalSorting(t, u)
 		}
 	}
-	
+
 	t.time++
 	t.sorted[t.time] = v
 }

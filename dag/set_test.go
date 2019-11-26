@@ -7,8 +7,8 @@ import (
 
 func TestSet_Add(t *testing.T) {
 	tests := []struct {
-		name   string
-		values []Hashable
+		name          string
+		values        []Hashable
 		expected_size int
 	}{
 		{
@@ -43,7 +43,7 @@ func TestSet_Add(t *testing.T) {
 func TestSet_Remove(t *testing.T) {
 	t.Run("Can remove items", func(t *testing.T) {
 		s := NewSet()
-		s.Add(&testVertex{1},&testVertex{2}, &testVertex{3}, &testVertex{4})
+		s.Add(&testVertex{1}, &testVertex{2}, &testVertex{3}, &testVertex{4})
 		s.Remove(&testVertex{1})
 		if s.Len() != 3 {
 			t.Errorf("Expected %d items in Set after removal, actual items in Set: %d", 3, s.Len())
@@ -64,11 +64,11 @@ func TestSet_Remove(t *testing.T) {
 func TestSet_Contains(t *testing.T) {
 	t.Run("Can remove items", func(t *testing.T) {
 		s := NewSet()
-		s.Add(&testVertex{1},&testVertex{2}, &testVertex{3}, &testVertex{4})
+		s.Add(&testVertex{1}, &testVertex{2}, &testVertex{3}, &testVertex{4})
 		if ok := s.Contains(&testVertex{1}); !ok {
 			t.Errorf("Expected item to be contained in set")
 		}
-		
+
 		if ok := s.Contains(&testVertex{1}, &testVertex{3}); !ok {
 			t.Errorf("Expected items to be contained in set")
 		}

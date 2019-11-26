@@ -7,8 +7,8 @@ import (
 
 func TestStack_Push(t *testing.T) {
 	tests := []struct {
-		name   string
-		stack Stack
+		name     string
+		stack    Stack
 		elements []T
 		expected Stack
 	}{
@@ -35,7 +35,7 @@ func TestStack_Push(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			s := tc.stack
 			s.Push(tc.elements...)
-			if !reflect.DeepEqual(s,tc.expected) {
+			if !reflect.DeepEqual(s, tc.expected) {
 				t.Errorf("Stack.Push() got = %v, expected %v", s, tc.expected)
 			}
 		})
@@ -44,13 +44,13 @@ func TestStack_Push(t *testing.T) {
 
 func TestStack_Pop(t *testing.T) {
 	type result struct {
-		item T
+		item  T
 		found bool
-	} 
+	}
 	tests := []struct {
-		name   string
-		stack Stack
-		expectedStack Stack
+		name           string
+		stack          Stack
+		expectedStack  Stack
 		expectedResult result
 	}{
 		{
@@ -84,13 +84,13 @@ func TestStack_Pop(t *testing.T) {
 
 func TestStack_Peek(t *testing.T) {
 	type result struct {
-		item T
+		item  T
 		found bool
-	} 
+	}
 	tests := []struct {
-		name   string
-		stack Stack
-		expectedStack Stack
+		name           string
+		stack          Stack
+		expectedStack  Stack
 		expectedResult result
 	}{
 		{
@@ -110,7 +110,7 @@ func TestStack_Peek(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			s := tc.stack
 			item, found := s.Peek()
-			if !reflect.DeepEqual(s,tc.expectedStack) {
+			if !reflect.DeepEqual(s, tc.expectedStack) {
 				t.Errorf("Stack.Peek() got stack = %v, expected stack %v", s, tc.expectedStack)
 			}
 
@@ -123,9 +123,9 @@ func TestStack_Peek(t *testing.T) {
 
 func TestStack_Size(t *testing.T) {
 	tests := []struct {
-		name   string
-		stack Stack
-		expected   int
+		name     string
+		stack    Stack
+		expected int
 	}{
 		{
 			"Empty stack size should be zero",
@@ -148,13 +148,12 @@ func TestStack_Size(t *testing.T) {
 	}
 }
 
-
 func TestStack_Contains(t *testing.T) {
 	tests := []struct {
-		name   string
-		stack Stack
-		element T
-		expected   bool
+		name     string
+		stack    Stack
+		element  T
+		expected bool
 	}{
 		{
 			"Empty stack should not contain element",
@@ -187,9 +186,9 @@ func TestStack_Contains(t *testing.T) {
 
 func TestStack_String(t *testing.T) {
 	tests := []struct {
-		name   string
-		stack Stack
-		expected   string
+		name     string
+		stack    Stack
+		expected string
 	}{
 		{
 			"Empty stack should return empty string",

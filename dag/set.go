@@ -1,6 +1,5 @@
 package dag
 
-
 // Set is a set data structure
 type Set interface {
 	Add(...Hashable)
@@ -18,7 +17,7 @@ type hashSet struct {
 
 // NewSet retuns an initialised set object
 func NewSet() *hashSet {
-	return &hashSet {
+	return &hashSet{
 		items: make(map[int]Hashable),
 	}
 }
@@ -30,15 +29,15 @@ func (s *hashSet) Add(values ...Hashable) {
 	}
 }
 
-// Remove removes one or more items from the set  
-func (s *hashSet) Remove (values ...Hashable) {
+// Remove removes one or more items from the set
+func (s *hashSet) Remove(values ...Hashable) {
 	for _, v := range values {
 		delete(s.items, v.Hashcode())
 	}
 }
 
 // Contains checks whether all items are present in the set
-// If one of the items is not present, it will return false 
+// If one of the items is not present, it will return false
 func (s *hashSet) Contains(values ...Hashable) bool {
 	for _, v := range values {
 		if _, ok := s.items[v.Hashcode()]; !ok {
@@ -59,7 +58,7 @@ func (s *hashSet) List() []Hashable {
 	return l
 }
 
-// Len returns the lenght of the Set 
+// Len returns the lenght of the Set
 func (s *hashSet) Len() int {
 	return len(s.items)
 }

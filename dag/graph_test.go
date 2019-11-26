@@ -55,12 +55,12 @@ func TestGraph_TopologicalSorting(t *testing.T) {
 		},
 		{
 			name: "Linear graph should return linear vertex slice",
-			g:     NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}),
+			g:    NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}),
 			want: []Vertex{&testVertex{1}, &testVertex{2}, &testVertex{3}},
 		},
 		{
 			name: "Multibranched graph should return correct topological sorting",
-			g:     NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}).AddEdge(&testVertex{4}, &testVertex{5}).AddEdge(&testVertex{1}, &testVertex{5}).AddEdge(&testVertex{2}, &testVertex{5}),
+			g:    NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}).AddEdge(&testVertex{4}, &testVertex{5}).AddEdge(&testVertex{1}, &testVertex{5}).AddEdge(&testVertex{2}, &testVertex{5}),
 			want: []Vertex{&testVertex{1}, &testVertex{2}, &testVertex{3}, &testVertex{4}, &testVertex{5}},
 		},
 	}

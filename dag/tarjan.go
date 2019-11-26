@@ -6,13 +6,13 @@ package dag
 func StronglyConnectedComponents(g *Graph) [][]Vertex {
 	vs := g.Vertices()
 	t := &tarjanTraversal{
-		nextIndex: 0,
+		nextIndex:   0,
 		vertexIndex: make(map[int]int, len(vs)),
-		stack: NewStack(),
-		graph: g,
+		stack:       NewStack(),
+		graph:       g,
 	}
 
-	for _, v := range  vs {
+	for _, v := range vs {
 		if !t.visited(v) {
 			stronglyConnectedComponents(t, v)
 		}
@@ -22,10 +22,10 @@ func StronglyConnectedComponents(g *Graph) [][]Vertex {
 }
 
 type tarjanTraversal struct {
-	nextIndex int
-	vertexIndex map[int]int
-	stack Stack
-	graph *Graph
+	nextIndex                   int
+	vertexIndex                 map[int]int
+	stack                       Stack
+	graph                       *Graph
 	stronglyConnectedComponents [][]Vertex
 }
 
@@ -65,7 +65,6 @@ func (t *tarjanTraversal) visited(v Vertex) bool {
 
 	return ok
 }
-
 
 func (t *tarjanTraversal) visit(v Vertex) int {
 	idx := t.nextIndex

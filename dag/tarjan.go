@@ -30,7 +30,7 @@ type tarjanTraversal struct {
 }
 
 func stronglyConnectedComponents(t *tarjanTraversal, v Vertex) int {
-	idx := t.increment(v)
+	idx := t.visit(v)
 	minIdx := idx
 
 	for _, u := range t.graph.Neighbours(v) {
@@ -67,7 +67,7 @@ func (t *tarjanTraversal) visited(v Vertex) bool {
 }
 
 
-func (t *tarjanTraversal) increment(v Vertex) int {
+func (t *tarjanTraversal) visit(v Vertex) int {
 	idx := t.nextIndex
 	t.stack.Push(v)
 	t.vertexIndex[v.Hashcode()] = idx

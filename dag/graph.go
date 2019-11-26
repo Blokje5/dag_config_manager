@@ -72,6 +72,63 @@ func (g *Graph) Cycles() [][]Vertex {
 	return cycles
 }
 
+// TopologicalSorting returns the topological sorted dag, with
+// each vertex ordered from starting point to end point.
+// The method assumes a valid dag as input.
+func (g *Graph) TopologicalSorting() []Vertex {
+	vs := g.Vertices()
+	vl := len(vs)
+
+	t := &topologicalSortingTraversal {
+		visitedMap: make(map[int]struct{}, vl),
+		sorted: make([]Vertex, vl),
+		graph: g,
+		time: -1,
+	}
+
+	for _, v := range  vs {
+		if !t.visited(v) {
+			topologicalSorting(t, v)
+		}
+	}
+
+	var reversed []Vertex
+	for i := vl - 1; i >= 0; i-- {
+		reversed = append(reversed, t.sorted[i])
+	}
+
+	return reversed
+}
+
+type topologicalSortingTraversal struct {
+	sorted []Vertex
+	visitedMap map[int]struct{}
+	graph *Graph
+	time int
+}
+
+func (t *topologicalSortingTraversal) visited(v Vertex) bool {
+	_, ok := t.visitedMap[v.Hashcode()]
+
+	return ok
+}
+
+func (t *topologicalSortingTraversal) visit(v Vertex) {
+	t.visitedMap[v.Hashcode()] = struct{}{}
+}
+
+func topologicalSorting(t *topologicalSortingTraversal, v Vertex) {
+	t.visit(v)
+	for _, u := range t.graph.Neighbours(v) {
+		if !t.visited(u) {
+			topologicalSorting(t, u)
+		}
+	}
+	
+	t.time++
+	t.sorted[t.time] = v
+}
+
 // Traversal provides a basic interface for graph traversal
 type Traversal interface {
 	// Visited should return true if Vertex "v" has already been visited in this

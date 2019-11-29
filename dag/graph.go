@@ -37,12 +37,12 @@ func (g *Graph) AddEdge(v1, v2 Vertex) *Graph {
 // Vertices returns a list of vertices
 func (g *Graph) Vertices() []Vertex {
 	l := g.vertices.List()
-	v := make([]Vertex, 0, g.vertices.Len())
-	for _, i := range l {
-		v = append(v, i.(Vertex))
+	r := make([]Vertex, g.vertices.Len())
+	for i, v  := range l {
+		r[i] = v.(Vertex)
 	}
 
-	return v
+	return r
 }
 
 // AdjacencyList returns the adjacency list representation of the graph

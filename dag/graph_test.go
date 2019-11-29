@@ -58,11 +58,12 @@ func TestGraph_TopologicalSorting(t *testing.T) {
 			g:    NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}),
 			want: []Vertex{&testVertex{1}, &testVertex{2}, &testVertex{3}},
 		},
-		{
-			name: "Multibranched graph should return correct topological sorting",
-			g:    NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}).AddEdge(&testVertex{4}, &testVertex{5}).AddEdge(&testVertex{1}, &testVertex{5}).AddEdge(&testVertex{2}, &testVertex{5}),
-			want: []Vertex{&testVertex{1}, &testVertex{2}, &testVertex{3}, &testVertex{4}, &testVertex{5}},
-		},
+		// TODO find a consistent order independent test for topological sorting
+		// {
+		// 	name: "Multibranched graph should return correct topological sorting",
+		// 	g:    NewGraph().AddEdge(&testVertex{1}, &testVertex{2}).AddEdge(&testVertex{2}, &testVertex{3}).AddEdge(&testVertex{4}, &testVertex{5}).AddEdge(&testVertex{1}, &testVertex{5}).AddEdge(&testVertex{2}, &testVertex{5}),
+		// 	want: []Vertex{&testVertex{1}, &testVertex{2}, &testVertex{3}, &testVertex{4}, &testVertex{5}},
+		// },
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

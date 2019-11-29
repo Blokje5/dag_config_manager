@@ -38,7 +38,7 @@ func (g *Graph) AddEdge(v1, v2 Vertex) *Graph {
 func (g *Graph) Vertices() []Vertex {
 	l := g.vertices.List()
 	r := make([]Vertex, g.vertices.Len())
-	for i, v  := range l {
+	for i, v := range l {
 		r[i] = v.(Vertex)
 	}
 

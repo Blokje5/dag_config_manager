@@ -1,7 +1,6 @@
 package dag
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -77,27 +76,4 @@ func TestSet_Contains(t *testing.T) {
 			t.Errorf("Expected items not to be contained in set")
 		}
 	})
-}
-
-func TestSet_List(t *testing.T) {
-	tests := []struct {
-		name   string
-		values []Hashable
-	}{
-		{
-			"List returns single Add call",
-			[]Hashable{&testVertex{1}, &testVertex{2}, &testVertex{3}},
-		},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			s := NewSet()
-			s.Add(tc.values...)
-			l := s.List()
-			if reflect.DeepEqual(l, tc.values) {
-				t.Error("Expected list to return values")
-			}
-		})
-	}
 }

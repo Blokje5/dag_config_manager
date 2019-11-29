@@ -21,3 +21,6 @@ jobs:
     
     - name: Test
       run: go test ./... -cover
+
+    - name: Vetting
+      run: go vet

@@ -26,4 +26,4 @@ jobs:
       run: go vet
     
     - name: Formatting
-      run: test -z $(gofmt -l .)
+      run: test -z "$(gofmt -l .)"

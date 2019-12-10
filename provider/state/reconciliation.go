@@ -67,7 +67,7 @@ func findCommonKeys(before, after map[string]interface{}) []string {
 // will be responsible for correctly reading the values
 // And executing the creation   
 type Create struct {
-	Key interface{} `json:"key"`
+	Key string `json:"key"`
 	Value interface{} `json:"value"`
 }
 
@@ -91,7 +91,7 @@ func findAddedKeys(before, after map[string]interface{}) []Create {
 // will be responsible for correctly reading the values
 // And executing the update   
 type Update struct {
-	Key interface{} `json:"key"`
+	Key string `json:"key"`
 	Before interface{} `json:"before"`
 	After interface{} `json:"after"`
 }
@@ -126,7 +126,7 @@ func isEqual(v1, v2 interface{}) bool {
 // will be responsible for correctly reading the values
 // And executing the deletion   
 type Delete struct {
-	Key interface{} `json:"key"`
+	Key string `json:"key"`
 	Value interface{} `json:"value"`
 }
 

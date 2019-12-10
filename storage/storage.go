@@ -1,7 +1,7 @@
 package storage
 
 // Storage defines the interface for the storage backend.
-// The storage backend is used to maintain metadata on the current execution. 
+// The storage backend is used to maintain metadata on the current execution.
 type Storage interface {
 	// Read the key from the storage backend
 	Read(key string) (interface{}, bool)

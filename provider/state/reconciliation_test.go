@@ -16,7 +16,7 @@ func TestDiff(t *testing.T) {
 			"No diff leads to no operations",
 			Reconciliation{
 				Before: make(map[string]interface{}),
-				After: make(map[string]interface{}),
+				After:  make(map[string]interface{}),
 			},
 			nilSlice,
 		},
@@ -42,7 +42,7 @@ func TestDiff(t *testing.T) {
 			},
 			[]Operation{
 				Delete{
-					Key: "a",
+					Key:   "a",
 					Value: 1,
 				},
 			},
@@ -57,7 +57,7 @@ func TestDiff(t *testing.T) {
 			},
 			[]Operation{
 				Create{
-					Key: "a",
+					Key:   "a",
 					Value: 1,
 				},
 			},
@@ -74,9 +74,9 @@ func TestDiff(t *testing.T) {
 			},
 			[]Operation{
 				Update{
-					Key: "a",
+					Key:    "a",
 					Before: 1,
-					After: 2,
+					After:  2,
 				},
 			},
 		},

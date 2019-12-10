@@ -12,7 +12,6 @@ type Reconciliation struct {
 	After map[string]interface{} `json:"after"`
 }
 
-
 // Diff returns the operations required to go from the before state
 // to the after state
 func (r *Reconciliation) Diff() []Operation {
@@ -28,7 +27,6 @@ func (r *Reconciliation) Diff() []Operation {
 	creations := findAddedKeys(before, after)
 	updates := findUpdatedValues(before, after, commonKeys)
 	deletions := findDeletedKeys(before, after)
-
 
 	for _, c := range creations {
 		op := c
@@ -55,19 +53,20 @@ type Operation interface{}
 func findCommonKeys(before, after map[string]interface{}) []string {
 	var commonKeys []string
 	for k := range before {
-		if _, ok := after[k]; ok{
+		if _, ok := after[k]; ok {
 			commonKeys = append(commonKeys, k)
 		}
 	}
 
 	return commonKeys
 }
+
 // Create captures newly added keys.
 // The reconciliation loop
 // will be responsible for correctly reading the values
-// And executing the creation   
+// And executing the creation
 type Create struct {
-	Key string `json:"key"`
+	Key   string      `json:"key"`
 	Value interface{} `json:"value"`
 }
 
@@ -76,7 +75,7 @@ func findAddedKeys(before, after map[string]interface{}) []Create {
 	for k := range after {
 		if _, ok := before[k]; !ok {
 			create := Create{
-				Key: k,
+				Key:   k,
 				Value: after[k],
 			}
 			createdKeys = append(createdKeys, create)
@@ -89,11 +88,11 @@ func findAddedKeys(before, after map[string]interface{}) []Create {
 // Update captures the change for a key
 // if a value is updated. The reconciliation loop
 // will be responsible for correctly reading the values
-// And executing the update   
+// And executing the update
 type Update struct {
-	Key string `json:"key"`
+	Key    string      `json:"key"`
 	Before interface{} `json:"before"`
-	After interface{} `json:"after"`
+	After  interface{} `json:"after"`
 }
 
 func findUpdatedValues(before, after map[string]interface{}, commonKeys []string) []Update {
@@ -103,9 +102,9 @@ func findUpdatedValues(before, after map[string]interface{}, commonKeys []string
 		afterValue := after[k]
 		if !isEqual(beforeValue, afterValue) {
 			update := Update{
-				Key: k,
+				Key:    k,
 				Before: beforeValue,
-				After: afterValue,
+				After:  afterValue,
 			}
 
 			updates = append(updates, update)
@@ -115,7 +114,7 @@ func findUpdatedValues(before, after map[string]interface{}, commonKeys []string
 	return updates
 }
 
-// Checks for equality between two interfaces 
+// Checks for equality between two interfaces
 func isEqual(v1, v2 interface{}) bool {
 	// TODO make a rigorous implementation checking for non-comparable types
 	return v1 == v2
@@ -124,9 +123,9 @@ func isEqual(v1, v2 interface{}) bool {
 // Delete captures removed keys.
 // The reconciliation loop
 // will be responsible for correctly reading the values
-// And executing the deletion   
+// And executing the deletion
 type Delete struct {
-	Key string `json:"key"`
+	Key   string      `json:"key"`
 	Value interface{} `json:"value"`
 }
 
@@ -135,7 +134,7 @@ func findDeletedKeys(before, after map[string]interface{}) []Delete {
 	for k := range before {
 		if _, ok := after[k]; !ok {
 			delete := Delete{
-				Key: k,
+				Key:   k,
 				Value: before[k],
 			}
 			deletedKeys = append(deletedKeys, delete)

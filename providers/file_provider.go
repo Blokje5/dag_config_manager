@@ -1,12 +1,12 @@
 package providers
 
 import (
-	"errors"
 	"encoding/json"
+	"errors"
 	"os"
 
-	"github.com/blokje5/dag_config_manager/storage"
 	"github.com/blokje5/dag_config_manager/provider/state"
+	"github.com/blokje5/dag_config_manager/storage"
 )
 
 // FileProvider implements the provider interface

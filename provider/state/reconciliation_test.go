@@ -41,11 +41,9 @@ func TestDiff(t *testing.T) {
 				After: map[string]interface{}{},
 			},
 			[]Operation{
-				Operation{
-					Delete: Delete{
-						Key: "a",
-						Value: 1,
-					},
+				Delete{
+					Key: "a",
+					Value: 1,
 				},
 			},
 		},
@@ -58,11 +56,9 @@ func TestDiff(t *testing.T) {
 				},
 			},
 			[]Operation{
-				Operation{
-					Create: Create{
-						Key: "a",
-						Value: 1,
-					},
+				Create{
+					Key: "a",
+					Value: 1,
 				},
 			},
 		},
@@ -77,12 +73,10 @@ func TestDiff(t *testing.T) {
 				},
 			},
 			[]Operation{
-				Operation{
-					Update: Update{
-						Key: "a",
-						Before: 1,
-						After: 2,
-					},
+				Update{
+					Key: "a",
+					Before: 1,
+					After: 2,
 				},
 			},
 		},

@@ -31,23 +31,17 @@ func (r *Reconciliation) Diff() []Operation {
 
 
 	for _, c := range creations {
-		op := Operation {
-			Create: c,
-		}
+		op := c
 		operations = append(operations, op)
 	}
 
 	for _, u := range updates {
-		op := Operation {
-			Update: u,
-		}
+		op := u
 		operations = append(operations, op)
 	}
 
 	for _, d := range deletions {
-		op := Operation {
-			Delete: d,
-		}
+		op := d
 		operations = append(operations, op)
 	}
 
@@ -56,12 +50,7 @@ func (r *Reconciliation) Diff() []Operation {
 
 // Operation represents a step to be taken by the
 // provider in the reconciliation loop
-type Operation struct {
-	Create `json:"create,omitempty"`
-	Update `json:"update,omitempty"`
-	Delete `json:"delete,omitempty"`
-
-}
+type Operation interface{}
 
 func findCommonKeys(before, after map[string]interface{}) []string {
 	var commonKeys []string

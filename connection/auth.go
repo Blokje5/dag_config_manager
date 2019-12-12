@@ -1,7 +1,12 @@
 package connection
 
-import "golang.org/x/crypto/ssh"
-
+import (
+	"golang.org/x/crypto/ssh"
+	"gopkg.in/yaml.v2"
+)
+// Auth represents the authentication method used for the connection
+// and is used by the Connection to gather metadata about how to authenticate
+// the connection.
 type Auth interface {
 	// User() should return the user for this call
 	User() string
@@ -10,16 +15,37 @@ type Auth interface {
 	AuthMethod() ssh.AuthMethod
 }
 
+type AuthMetadata struct {
+	SimplePasswordAuth *SSHSimplePasswordAuth `yaml:"simplePasswordAuth"`
+}
+
+func AuthMetadataFromYaml(data []byte) (*AuthMetadata, error) {
+	authMetadata := AuthMetadata{}
+	if err := yaml.Unmarshal(data, &authMetadata); err != nil {
+		return nil, err
+	}
+
+	return &authMetadata, nil
+}
+
+func (a *AuthMetadata) GetAuth() Auth {
+	if a.SimplePasswordAuth != nil {
+		return a.SimplePasswordAuth
+	}
+
+	return nil
+}
+
 // SSHSimplePasswordAuth represents Simple SSH password authentication
 type SSHSimplePasswordAuth struct {
-	user     string
-	password string
+	UserName     string `yaml:"user"`
+	Password string `yaml:"password"`
 }
 
 func (s *SSHSimplePasswordAuth) User() string {
-	return s.user
+	return s.UserName
 }
 
 func (s *SSHSimplePasswordAuth) AuthMethod() ssh.AuthMethod {
-	return ssh.Password(s.password)
+	return ssh.Password(s.Password)
 }

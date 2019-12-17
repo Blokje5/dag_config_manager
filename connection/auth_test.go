@@ -12,15 +12,15 @@ simplePasswordAuth:
   password: password
 `
 	tests := []struct {
-		name    string
-		data 	[]byte
-		want    *AuthMetadata
+		name string
+		data []byte
+		want *AuthMetadata
 	}{
 		{
 			"Expect correct serialization of simple auth",
 			[]byte(simplePasswordAuth),
-			&AuthMetadata {
-				&SSHSimplePasswordAuth {
+			&AuthMetadata{
+				&SSHSimplePasswordAuth{
 					UserName: "user",
 					Password: "password",
 				},

@@ -4,6 +4,7 @@ import (
 	"golang.org/x/crypto/ssh"
 	"gopkg.in/yaml.v2"
 )
+
 // Auth represents the authentication method used for the connection
 // and is used by the Connection to gather metadata about how to authenticate
 // the connection.
@@ -38,7 +39,7 @@ func (a *AuthMetadata) GetAuth() Auth {
 
 // SSHSimplePasswordAuth represents Simple SSH password authentication
 type SSHSimplePasswordAuth struct {
-	UserName     string `yaml:"user"`
+	UserName string `yaml:"user"`
 	Password string `yaml:"password"`
 }
 

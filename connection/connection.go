@@ -2,7 +2,7 @@ package connection
 
 import "golang.org/x/crypto/ssh"
 
-// CloseFunc represents a close method of a connection 
+// CloseFunc represents a close method of a connection
 type CloseFunc func() error
 
 type SSHConnection struct {
@@ -10,14 +10,14 @@ type SSHConnection struct {
 }
 
 // GetConnection returns a ssh.Client and a CloseFunc. The CloseFunc should
-// be called and defered to prevent leakage of the connection resources  
+// be called and defered to prevent leakage of the connection resources
 func (c *SSHConnection) GetConnection() (*ssh.Client, CloseFunc, error) {
 	config := &ssh.ClientConfig{
 		User: c.auth.User(),
 		Auth: []ssh.AuthMethod{
 			c.auth.AuthMethod(),
 		},
-		//TODO pass option to 
+		//TODO pass option to
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 

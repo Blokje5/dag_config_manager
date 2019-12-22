@@ -21,6 +21,10 @@ type fileState struct {
 	path string `json:omitempty`
 }
 
+func (p *FileProvider) Register() string {
+	return "FileProvider"
+}
+
 func (p *FileProvider) Init(store storage.Storage, stateJSON []byte) {
 	p.store = store
 	var state fileState

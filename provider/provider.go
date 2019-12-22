@@ -24,4 +24,8 @@ type Provider interface {
 	// Reconcile takes in the current requested state
 	// and reconciles the host
 	Reconcile(ops []state.Operation)
+
+	// Register registers a task with the provider registry.
+	// This method should return a unique name for the provider.
+	Register() string
 }

@@ -1,6 +1,11 @@
 package task
 
-import "gopkg.in/yaml.v2"
+import (
+	"fmt"
+
+	"github.com/blokje5/dag_config_manager/provider"
+	"gopkg.in/yaml.v2"
+)
 
 // Task represents an operation to be performed by a provider
 type Task struct {
@@ -19,4 +24,13 @@ func Parse(data []byte) (Task, error) {
 		return task, err
 	}
 	return task, nil
+}
+
+func (t Task) Initialize(registry provider.Registry) error {
+	provider, ok := registry.FindProvider(t.Provider)
+	if !ok {
+		return fmt.Errorf("Unable to find provider for task: %v", t.Name)
+	}
+
+	
 }
